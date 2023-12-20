@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Added Documents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF; /* White background */
+            color: #0F0F0F; /* Dark gray text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #232D3F; /* Dark blue text */
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #232D3F; /* Dark blue border */
+            text-align: left;
+        }
+
+        th {
+            background-color: #232D3F; /* Dark blue background for table header */
+            color: #FFFFFF; /* White text */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light gray background for even rows */
+        }
+    </style>
+</head>
+
+<body>
+    {% for house_name, house_data in data.items() %}
+    <h2>{{ house_name }}</h2>
+    <table>
+        <tr>
+            <th>Full Name</th>
+            <th>Last call date</th>
+            <th>Response</th>
+        </tr>
+        {% for user_data in house_data %}
+        <tr>
+            <td>{{ user_data.full_name }}</td>
+  
+                {% for key, value in user_data.last_document.items() %}
+                   <td> {{ key }}</td><td> {{ value }}</td><br>
+                {% endfor %}
+  
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</body>
+
+</html>

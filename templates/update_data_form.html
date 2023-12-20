@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Data</title>
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF; /* White background */
+    color: #333333; /* Dark gray text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+h1 {
+    font-size: 24px;
+    color: #333333; /* Dark gray text */
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%; /* Adjust the form width as needed */
+}
+
+label {
+    font-size: 16px;
+    color: #333333; /* Dark gray text */
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #008170; /* Darker green border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #FFFFFF; /* White background for input and textarea */
+    color: #333333; /* Dark gray text */
+}
+
+input[type="submit"] {
+    background-color: #005B41; /* Dark green button */
+    color: #FFFFFF; /* White text */
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #008170; /* Darker green button on hover */
+}
+
+    </style>
+</head>
+<body>
+    <h1>Edit Data</h1>
+    <form method="POST" action="/update_call">
+        <input type="hidden" name="selectedName" value="{{ names.full_name }}">
+        
+        <label for="rollNumber">Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber" value="{{ names.roll_number }}"><br><br>
+        
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" value="{{ names.full_name }}"><br><br>
+        
+        <label for="vongsterPhoto" style="display: none;">Vongster Photo URL:</label>
+        <input type="text" id="vongsterPhoto" name="vongsterPhoto" value="{{ names.vongster_photo }}" style="display: none;"><br><br>
+        
+        <label for="currentStatus">Current Status:</label>
+        <input type="text" id="currentStatus" name="currentStatus" value="{{ names.current_status }}"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ names.email }}"><br><br>
+
+        <label for="grade">Grade:</label>
+        <input type="text" id="grade" name="grade" value="{{ names.grade }}"><br><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" value="{{ names.city }}"><br><br>
+
+        <label for="schoolName">School Name:</label>
+        <input type="text" id="schoolName" name="schoolName" value="{{ names.school_name }}"><br><br>
+
+        <label for="mobileNumber">Mobile Number:</label>
+        <input type="tel" id="mobileNumber" name="mobileNumber" value="{{ names.mobile_number }}"><br><br>
+
+        <label for="deviceStatus">Device Status:</label>
+        <input type="text" id="deviceStatus" name="deviceStatus" value="{{ names.device_status }}"><br><br>
+
+        <label for="schoolTiming">School Timing:</label>
+        <input type="text" id="schoolTiming" name="schoolTiming" value="{{ names.school_timing }}"><br><br>
+
+        <label for="tuitionTiming">Tuition Timing:</label>
+        <input type="text" id="tuitionTiming" name="tuitionTiming" value="{{ names.tuition_timing }}"><br><br>
+
+        <label for="houseName">House Name:</label>
+        <input type="text" id="houseName" name="houseName" value="{{ names.house_name }}"><br><br>
+
+        <label for="likesDislikes">Likes/Dislikes:</label>
+        <input type="text" id="likesDislikes" name="likesDislikes" value="{{ names.likes_dislikes }}"><br><br>
+
+        <label for="extraCurriculars">Extra Curriculars:</label>
+        <input type="text" id="extraCurriculars" name="extraCurriculars" value="{{ names.extra_curriculars }}"><br><br>
+
+        <label for="hobbies">Hobbies:</label>
+        <input type="text" id="hobbies" name="hobbies" value="{{ names.hobbies }}"><br><br>
+
+        <label for="examSchedules">Exam Schedules:</label>
+        <input type="text" id="examSchedules" name="examSchedules" value="{{ names.exam_schedules }}"><br><br>
+
+        <label for="lastEvent">Last Event Attended:</label>
+        <input type="text" id="lastEvent" name="lastEvent" value="{{ names.last_event_attended }}"><br><br>
+
+        <label for="reasonsForNotParticipating">Reasons for Not Participating:</label>
+        <input type="text" id="reasonsForNotParticipating" name="reasonsForNotParticipating" value="{{ names.reasons_not_participating }}"><br><br>
+
+        <label for="expectedFutureParticipation">Expected Future Participation:</label>
+        <input type="text" id="expectedFutureParticipation" name="expectedFutureParticipation" value="{{ names.future_participation }}"><br><br>
+
+        <label for="preferredTimingDays">Preferred Timing Days:</label>
+        <input type="text" id="preferredTimingDays" name="preferredTimingDays" value="{{ names.preferred_timing_days }}"><br><br>
+
+        <label for="reasonForNotParticipating">Reason for Not Participating:</label>
+        <input type="text" id="reasonForNotParticipating" name="reasonForNotParticipating" value="{{ names.reason_not_participating }}"><br><br>
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback">{{ names.feedback }}</textarea><br><br>
+
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

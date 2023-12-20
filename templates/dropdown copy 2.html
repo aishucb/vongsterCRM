@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Name Dropdown</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #0F0F0F; /* Dark background */
+    color: #F0F0F0; /* White text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: #232D3F; /* Dark blue background */
+    color: #F0F0F0; /* White text */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.select-box,
+.input-field {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #008170; /* Darker green border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #0F0F0F; /* Dark background for select and input */
+    color: #F0F0F0; /* White text */
+}
+
+.required {
+    color: #e74c3c; /* Red for required field indicator */
+    margin-left: 5px;
+}
+
+.submit-button {
+    background-color: #005B41; /* Dark green button */
+    color: #F0F0F0; /* White text */
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #008170; /* Darker green button on hover */
+}
+
+      </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Select a Name:</h1>
+        <form action="/table_full_data_entry_activity" method="post">
+            <select name="selectedName" class="select-box">
+                {% for name in names %}
+                <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="field1">Date of activity:<span class="required">*</span></label>
+            <input type="text" id="field1" name="rollNumber" class="input-field" required>
+
+            <label for="field2">Statues of activity:<span class="required">*</span></label>
+            <input type="text" id="field2" name="fullName" class="input-field" required>
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

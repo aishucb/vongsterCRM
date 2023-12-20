@@ -1,0 +1,53 @@
+from flask import Flask, render_template, request, jsonify
+from pymongo import MongoClient
+
+app = Flask(__name__)
+uri = "mongodb+srv://vongmeetings2:b6Kq0XAGlaMmOo87@vongledata.z6p1osk.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(uri)
+db = client.get_database("vongledata")
+
+@app.route('/add_call', methods=['GET', 'POST'])
+def add_call():
+    collection = db['test22']
+    if request.method == 'POST':
+        # Get data from the form
+        field1 = request.form['field1']
+        field2 = request.form['field2']
+
+        # Insert data into the collection
+        data_to_insert = {
+            'field1': field1,
+            'field2': field2,
+            # Add more fields if necessary
+        }
+        collection.insert_one(data_to_insert)
+
+        return jsonify({'message': 'Data added successfully to /add_call!'}), 201
+
+    # If it's a GET request, serve the form
+    return render_template('form2.html')
+@app.route('/add_data', methods=['GET', 'POST'])
+def add_data():
+    collection = db['test']
+    if request.method == 'POST':
+        # Get data from the form
+        field1 = request.form['field1']
+        field2 = request.form['field2']
+
+        # Insert data into the collection
+        data_to_insert = {
+            'field1': field1,
+            'field2': field2,
+            # Add more fields if necessary
+        }
+        collection.insert_one(data_to_insert)
+
+        return jsonify({'message': 'Data added successfully to /add_data!'}), 201
+
+    # If it's a GET request, serve the form
+    return render_template('form.html')
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

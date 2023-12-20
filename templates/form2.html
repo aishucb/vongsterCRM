@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Form to Add Data</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0F0F0F; /* Dark background */
+    color: #F0F0F0; /* White text */
+    margin: 0;
+    padding: 30px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #232D3F; /* Dark blue background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #F0F0F0; /* White heading */
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #F0F0F0; /* White text */
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select,
+textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #008170; /* Darker green border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #0F0F0F; /* Dark background for input fields */
+    color: #F0F0F0; /* White text */
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+    color: #F0F0F0; /* White text for file input */
+}
+
+.required {
+    color: #e74c3c; /* Red for required field indicator */
+    margin-left: 5px;
+}
+
+input[type="submit"] {
+    background-color: #005B41; /* Dark green button */
+    color: #F0F0F0; /* White text */
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #008170; /* Darker green button on hover */
+}
+
+    </style>
+</head>
+
+<body>
+    <h1>Enter Data</h1>
+    <form method="POST" action="/add_call" enctype="multipart/form-data">
+        <label for="field1">Roll Number of the Vongster:<span class="required">*</span></label>
+        <input type="text" id="field1" name="rollNumber" required>
+
+        <label for="field2">Vongster's Full Name:<span class="required">*</span></label>
+        <input type="text" id="field2" name="fullName" required>
+
+        <label for="field5">Email ID:</label>
+        <input type="email" id="field5" name="email" ><br>
+
+        <label for="vongsterPhoto">Vongster Photo:</label>
+        <input type="file" id="vongsterPhoto" name="vongsterPhoto" accept="image/*" required>
+
+        <label for="field4">Current Status of the Vongster:</label>
+        <select id="field4" name="currentStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive (for shorter period)</option>
+            <option value="dormant">Dormant</option>
+        </select>
+
+        <label for="field6">Grade:</label>
+        <input type="text" id="field6" name="grade"><br>
+
+        <label for="field7">City:</label>
+        <input type="text" id="field7" name="city" ><br>
+
+        <label for="field8">School Name:</label>
+        <input type="text" id="field8" name="schoolName" ><br>
+
+        <label for="field9">Mobile Number:</label>
+        <input type="tel" id="field9" name="mobileNumber"><br>
+
+        <label for="field10">Device Status:</label>
+        <input type="text" id="field10" name="deviceStatus" ><br>
+
+        <label for="field11">School Timing:</label>
+        <input type="text" id="field11" name="schoolTiming" ><br>
+
+        <label for="field12">Tuition Timing:</label>
+        <input type="text" id="field12" name="tuitionTiming"><br>
+
+        <label for="field13">House Name:</label>
+<select id="field13" name="houseName">
+    <option value="House 1">House 1</option>
+    <option value="House 2">House 2</option>
+    <option value="House 3">House 3</option>
+    <option value="House 4">House 4</option>
+    <option value="House 5">House 5</option>
+    <option value="House 6">House 6</option>
+</select><br>
+
+
+        <label for="field14">Likes and Dislikes:</label>
+        <textarea id="field14" name="likesDislikes" rows="4" ></textarea><br>
+
+        <label for="field15">Extra Curriculars of the Vongster:</label>
+        <textarea id="field15" name="extraCurriculars" rows="4" ></textarea><br>
+
+        <label for="field16">Hobbies:</label>
+        <input type="text" id="field16" name="hobbies" ><br>
+
+        <label for="field17">Exam Schedules:</label>
+        <textarea id="field17" name="examSchedules" rows="4" ></textarea><br>
+
+        <label for="field18">Last Event Attended:</label>
+        <input type="text" id="field18" name="lastEvent"><br>
+
+        <label for="field19">Reasons for Not Participating:</label>
+        <textarea id="field19" name="reasonsForNotParticipating" rows="4" ></textarea><br>
+
+        <label for="field20">Expected Future Participation:</label>
+        <textarea id="field20" name="expectedFutureParticipation" rows="4" ></textarea><br>
+
+        <label for="field21">Preferred Timing and Days for Activities and Forum Sessions:</label>
+        <input type="text" id="field21" name="preferredTimingDays" ><br>
+
+        <label for="field22">Reason for Not Participating:</label>
+        <textarea id="field22" name="reasonForNotParticipating" rows="4" ></textarea><br>
+
+        <label for="field23">Suggestions/Feedback about Vong's Current Format of Activities:</label>
+        <textarea id="field23" name="feedback" rows="4"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Name Dropdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-image: url("../images/bg.jpg");
+            background-size: cover;
+            font-family: 'Inter', sans-serif;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .card {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            padding-right: 25px;
+            text-align: left;
+            border-right: 1px solid #dee2e6;
+        }
+
+        
+
+        .selected-row {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        option:hover {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .table-row:hover {
+            background-color: #cbd8fc;
+            color: #ffffff;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <label for="myDropdown">House name:</label>
+        <select id="myDropdown" name="myDropdown" onchange="filterTable(this)">
+            <option value="all">All</option>
+            {% for row in house %}
+            <option value="{{ row }}" >{{ row }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label for="displayText" style="display: none;">Selected Value:</label>
+        <span id="displayText" style="display: none;">None selected</span>
+
+        <h1>Select the vongster:</h1>
+        <form action="/get_data" method="post" id="nameForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>School</th>
+                        <th>City</th>
+                        <th>House</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr class="table-row" data-category="{{ row[3] }}">
+                        <td style="display: none;">{{ row[0] }}</td>
+                        <td>{{ row[4] }} {{ row[5] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="selectedName" id="selectedName">
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle name click event
+            $('.table-row').on('click', function () {
+                // Set the selected name to the hidden input
+                $('#selectedName').val($(this).find('td:first-child').text());
+                // Submit the form
+                $('#nameForm').submit();
+            });
+        });
+
+        function filterTable(select) {
+            var selectedValue = select.value;
+
+            // Update the text based on the selected value
+            document.getElementById("displayText").textContent = selectedValue;
+
+            // Show or hide rows based on the selected value
+            if (selectedValue === 'all') {
+                $('.table-row').show();
+            } else {
+                $('.table-row').hide();
+                $('.table-row[data-category="' + selectedValue + '"]').show();
+            }
+        }
+    </script>
+</body>
+
+</html>

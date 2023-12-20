@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Name Dropdown</title>
+    <style>
+     
+     body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-box {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.input-field {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.required {
+    color: red;
+}
+
+.submit-button {
+    background-color: #240513;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #240513;
+}
+
+      </style>
+</head>
+
+<body>
+    <div class="card" style="padding: 100px;">
+        <h1>Select a Name:</h1>
+        <form action="/table_full_data_entry" method="post">
+            <select name="selectedName" class="select-box">
+
+                <option value="{{ names }}">{{ names }}</option>
+            </select>
+            
+            <label for="field1">Date of call:<span class="required">*</span></label>
+            <input type="text" id="field1" name="date" class="input-field" required>
+
+            <label for="field2">Preference for Activities:</label>
+            <input type="text" id="field2" name="Preference for Activities" class="input-field">
+
+            <label for="field2">Preferred Time and days for Activities:</label>
+            <input type="text" id="field3" name="Preferred Time and days for Activities" class="input-field">
+
+            <label for="field2">Reasons for Not participating:</label>
+            <input type="text" id="field4" name="Reasons for Not participating" class="input-field">
+
+            <label for="field2">Suggestions / Feedback about vong Activities:</label>
+            <input type="text" id="field5" name="Suggestions / Feedback about vong Activities" class="input-field">
+
+            <label for="field2">Willing to participate in future (Yes / No):</label>
+            <input type="text" id="field6" name="Willing to participate in future (Yes / No)" class="input-field">
+
+            <label for="field2">Upcoming /Ongoing Exam Schedule:</label>
+            <input type="text" id="field7" name="Upcoming /Ongoing Exam Schedule" class="input-field" >
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

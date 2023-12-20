@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Last Added Documents</title>
+</head>
+
+<body>
+    <h1>All Last Added Documents</h1>
+    {% for house_name, document in documents.items() %}
+    <h2>{{ house_name }}</h2>
+    {% if document %}
+    <ul>
+        {% for key, value in document.items() %}
+        <li><strong>{{ key }}</strong>: {{ value }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No documents found for {{ house_name }}.</p>
+    {% endif %}
+    {% endfor %}
+</body>
+
+</html>
