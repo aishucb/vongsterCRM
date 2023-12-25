@@ -136,9 +136,9 @@
       padding: 15px;
     }
 
-    .card {
+    /* .card {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    }
+    } */
 
     .card {
       position: relative;
@@ -367,7 +367,7 @@
             <div id="Motivation Tracker Attributes" style="display: none;">
               <br><br><span onclick="toggleDisplay('Preference for Activities')">Preference for Activities:</span>
               <br><br>
-              <table class="data-table" id="Preference for Activities" style="display: none;padding-bottom: 10px;" >
+              <table class="data-table" id="Preference for Activities" style="display: none;padding-bottom: 10px;border: 1px #000000;" >
                 {% for item in data %}
                 <tr>
                   {% for key, value in item.items() %}

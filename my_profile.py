@@ -196,8 +196,12 @@ def index():
         collection = db[i+'_call']
         documents = collection.find({})
         dates = [document.get('date', 'Unknown') for document in documents]
-        print(dates[-1])
-        last_dates_list.append(dates[-1])
+        
+        if dates:
+            print(dates[-1])
+            last_dates_list.append(dates[-1])
+        else:
+            last_dates_list.append(None)
     data = list(zip(names[:min_length], schools[:min_length], city[:min_length],house[:min_length],firstnames[:min_length],lastnames[:min_length],last_dates_list[:min_length]))
 
     return render_template('dropdown.html', data=data,house=unique_list)
