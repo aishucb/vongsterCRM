@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify,redirect,flash
 from pymongo import MongoClient
 from bson import ObjectId,json_util
+from flask_cors import CORS
 import os
 import json
 from operator import itemgetter
 app = Flask(__name__,static_folder='images')
+CORS(app)
 uri = "mongodb+srv://vongledata:1UVw7DhRKcRQJPY3@cluster0.t3ujmhu.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri)
 db = client.get_database("Vongdata")
@@ -13,10 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
-#first look
-@app.route('/')
-def index2():
-    return render_template('index.html')
+
 
 #second look
 @app.route('/houseselect')
@@ -108,11 +107,13 @@ def table():
 
 @app.route('/table_full_data_entry', methods=['GET', 'POST'])
 def add_data():
-    dbname = request.form['selectedName']
-    dbname=dbname+"_call"
-    collection = db[dbname]
+    
+    
     if request.method == 'POST':
         # Get data from the form
+        dbname = request.form['names']
+        dbname=dbname+"_call"
+        collection = db[dbname]
         field1 = request.form['date']
         field2 =  request.form['Preference for Activities']
         field3 =  request.form['Preferred Time and days for Activities']
@@ -170,7 +171,7 @@ def table_full_data_entry_activity():
 
 #This is for show data for indivitual
 
-@app.route('/show_data')
+@app.route('/')
 def index():
     collection = db['test3']
     documents1 = collection.find({})
@@ -179,6 +180,7 @@ def index():
     documents4 = collection.find({})
     documents5 = collection.find({})
     documents6 = collection.find({})
+
 
     names = [document.get('full_name', 'Unknown') for document in documents1]
     firstnames = [document.get('firstname', 'Unknown') for document in documents5]
@@ -189,8 +191,14 @@ def index():
     unique_list = [item for index, item in enumerate(house) if item not in house[:index]]
     min_length = min(len(names), len(schools), len(city),len(house))
     print(unique_list)
-    
-    data = list(zip(names[:min_length], schools[:min_length], city[:min_length],house[:min_length],firstnames[:min_length],lastnames[:min_length]))
+    last_dates_list = []
+    for i in names:
+        collection = db[i+'_call']
+        documents = collection.find({})
+        dates = [document.get('date', 'Unknown') for document in documents]
+        print(dates[-1])
+        last_dates_list.append(dates[-1])
+    data = list(zip(names[:min_length], schools[:min_length], city[:min_length],house[:min_length],firstnames[:min_length],lastnames[:min_length],last_dates_list[:min_length]))
 
     return render_template('dropdown.html', data=data,house=unique_list)
 
@@ -417,9 +425,13 @@ def get_last_added_documents():
                 full_name = collection_name.replace('_call', '')
                 test3_collection = db['test3']
                 user_data = test3_collection.find_one({'full_name': full_name})
+                if user_data and 'house' in user_data:
+                    house_name = user_data['house']
+    # Rest of your code
+                else:
+    # Handle the case where 'house_name' is not present or user_data is None
+                    house_name = 'Default House Name'
 
-                # Append the required data to the result dictionary
-                house_name = user_data['house_name']
                 if house_name not in result:
                     result[house_name] = []
                 result[house_name].append({
@@ -431,6 +443,71 @@ def get_last_added_documents():
     sorted_result = dict(sorted(result.items(), key=itemgetter(0)))
 
     return render_template('last_added_documents.html', data=sorted_result)
+@app.route('/update_status', methods=['POST'])
+def update_status():
+    try:
+        selected_status = request.json.get('status')
+        full_name = request.args.get('full_name', 'Unknown')
+    
+        collection = db['test3']
+        result = collection.update_one({'full_name': full_name}, {'$set': {'active': selected_status}})
+
+        if result.modified_count > 0:
+            return jsonify({'success': True, 'message': 'Status updated successfully'})
+        else:
+            return jsonify({'success': False, 'message': 'Failed to update status'})
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({'error': 'Internal Server Error'}), 500
+    
+
+@app.route('/table_full_data_entry_update', methods=['GET', 'POST'])
+def add_data2():
+    
+    roll_num = request.args.get('full_name', 'Unknown')
+    if request.method == 'POST':
+        # Get data from the form
+        
+        dbname = roll_num + "_call"
+        collection = db[dbname]
+        field1 = request.form['date']
+        field2 = request.form['Preference for Activities']
+        field3 = request.form['Preferred Time and days for Activities']
+        field4 = request.form['Reasons for Not participating']
+        field5 = request.form['Suggestions / Feedback about vong Activities']
+        field6 = request.form['Willing to participate in future (Yes / No)']
+        field7 = request.form['Upcoming /Ongoing Exam Schedule']
+        
+        # Define the criteria for the update
+        filter_criteria = {'date': field1, 'Preference for Activities': field2, 'Preferred Time and days for Activities': field3}
+        
+        # Set the data to be updated or inserted
+        data_to_update = {
+            'date': field1,
+            'Preference for Activities': field2,
+            'Preferred Time and days for Activities': field3,
+            'Reasons for Not participating': field4,
+            'Suggestions / Feedback about vong Activities': field5,
+            'Willing to participate in future (Yes / No)': field6,
+            'Upcoming /Ongoing Exam Schedule': field7
+        }
+
+        # Perform the update or insert
+        result = collection.update_one(filter_criteria, {'$set': data_to_update}, upsert=True)
+
+        if result.modified_count > 0:
+            # Document updated
+            return redirect('/')
+        elif result.upserted_id:
+            # New document inserted
+            return redirect('/')
+        else:
+            # No changes made
+            return "No changes made"
+
+    # Handle other HTTP methods (e.g., GET) as needed
+    return "Invalid request method"
+
 
 if __name__ == '__main__':
     app.run(debug=True)

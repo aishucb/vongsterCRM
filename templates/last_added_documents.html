@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Last Added Documents</title>
     <style>
         body {
@@ -16,20 +24,31 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+           
         }
+        h1 {
+    color: #0d071f; /* Text color (you can use any color code or name) */
+    font-family: Arial, sans-serif; /* Font family */
+    font-size: 28px; /* Font size */
+    font-weight: bold; /* Font weight (bold) */
+    margin-top: 20px; /* Bottom margin */
+    text-align: center; /* Text alignment (centered) */
+}
 
         h2 {
-            font-size: 20px;
+            
             color: #232D3F; /* Dark blue text */
             margin-top: 20px;
         }
 
         table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    width: 100%; /* Set to 100% to take full width of the container */
+    min-width: 800px; /* Set a minimum width to trigger horizontal scrolling */
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto; /* Add this line to enable horizontal scrolling */
+}
+
 
         th, td {
             padding: 10px;
@@ -49,26 +68,42 @@
 </head>
 
 <body>
+    <h1>House Wise Data</h1>
     {% for house_name, house_data in data.items() %}
-    <h2>{{ house_name }}</h2>
-    <table>
-        <tr>
-            <th>Full Name</th>
-            <th>Last call date</th>
-            <th>Response</th>
-        </tr>
-        {% for user_data in house_data %}
-        <tr>
-            <td>{{ user_data.full_name }}</td>
-  
+    <h2 style="padding-top: 100px;">{{ house_name }}</h2>
+    <table id="{{ house_name }}">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>date</th>
+                <th>Preference for Activities</th>
+                <th>Preferred Time and days for Activities</th>
+                <th>Reasons for Not participating</th>
+                <th>Suggestions / Feedback about vong Activities</th>
+                <th>Willing to participate in the future (Yes / No)</th>
+                <th>Upcoming / Ongoing Exam Schedule</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_data in house_data %}
+            <tr>
+                <td>{{ user_data.full_name }}</td>
                 {% for key, value in user_data.last_document.items() %}
-                   <td> {{ key }}</td><td> {{ value }}</td><br>
+                <td>{{ value }}</td>
                 {% endfor %}
-  
-        </tr>
-        {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     {% endfor %}
+
+    <script>
+        $(document).ready(function () {
+            {% for house_name, _ in data.items() %}
+            $("#{{ house_name }}").DataTable();
+            {% endfor %}
+        });
+    </script>
 </body>
 
 </html>

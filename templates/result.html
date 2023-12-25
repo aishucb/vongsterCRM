@@ -62,7 +62,7 @@
     }
 
     .data-table {
-      width: 100%;
+
       border-collapse: collapse;
       margin-bottom: 30px;
       background-color: #ffffff;
@@ -83,8 +83,8 @@
 
     .data-table th,
     .data-table td {
-      border: 1px solid #a0e9ff;
-      padding: 12px;
+      border: 0px solid #a0e9ff;
+      padding: 9px;
       text-align: left;
     }
 
@@ -185,12 +185,13 @@
     .shadow-none {
       box-shadow: none !important;
     }
+    
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-  {% for data in cv %}
+  {% for data2 in cv %}
   <div class="container">
     <div class="main-body">
 
@@ -203,8 +204,22 @@
                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                   width="150">
                 <div class="mt-3">
-                  <h2>{{ data.full_name }}</h2>
-                  <p class="text-secondary mb-1">{{ data.roll_number }}</p>
+                  <h2>{{ data2.full_name }}</h2>
+                  {% if data2.active == 'Active' %}
+                  <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
+                    <option value="active" selected>Active</option>
+                    <option value="dormant">Dormant</option>
+                  {% endif %}
+                  {% if data2.active == 'Dormant' %}
+                  <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
+                    <option value="active" >Active</option>
+                    <option value="dormant" selected>Dormant</option>
+                  {% endif %}
+                </select>
+
+                
+
+
                 </div>
               </div>
             </div>
@@ -221,7 +236,7 @@
                   <h6 class="mb-0">Full Name</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.full_name }}
+                  {{ data2.full_name }}
                 </div>
               </div>
               <hr>
@@ -230,7 +245,7 @@
                   <h6 class="mb-0">Roll number</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.roll_number }}
+                  {{ data2.roll_number }}
                 </div>
               </div>
               <hr>
@@ -239,7 +254,7 @@
                   <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.email }}
+                  {{ data2.email }}
                 </div>
               </div>
               <hr>
@@ -248,7 +263,7 @@
                   <h6 class="mb-0">Mobile</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.phone }}
+                  {{ data2.phone }}
                 </div>
               </div>
               <hr>
@@ -257,7 +272,7 @@
                   <h6 class="mb-0">City</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.city }}
+                  {{ data2.city }}
                 </div>
               </div>
               <hr>
@@ -266,7 +281,7 @@
                   <h6 class="mb-0">School name</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.institution }}
+                  {{ data2.institution }}
                 </div>
               </div>
               <hr>
@@ -275,7 +290,7 @@
                   <h6 class="mb-0">House Name</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.house }}
+                  {{ data2.house }}
                 </div>
               </div>
               <hr>
@@ -284,7 +299,7 @@
                   <h6 class="mb-0">Address</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ data.address }}
+                  {{ data2.address }}
                 </div>
               </div>
               <hr>
@@ -296,22 +311,23 @@
       </div>
 
     </div>
-    <div class="row">
-      <div class="col-sm-6 ">
-        <div class="card h-100">
-          <div class="card-body">
+    <div class="row" >
+      <div class="col-sm-12 " >
+        <div class="card h-100" >
+          <div class="card-body" >
 
             <h1 class="heading" style="display: inline-block; text-align: center;"
               onclick="toggleDisplay('Review Call Dates')">Review Call Dates</h1>
-            <a href="/table_data?full_name={{ data.full_name }}" class="custom-button"
-              style="display: inline-block; margin-left: 20px;">+</a> {% endfor %}
+            <a href="/table_data?full_name={{ data2.full_name }}" class="custom-button"
+              style="display: inline-block; margin-left: 20px;">+</a>
             {% for data in cv %}
             <div id="Review Call Dates" style="display: none;">
               {% endfor %}
 
               {% for item in data %}
               <br>
-              <table class="data-table" id="{{ item['date'] }}" style="display: none;">
+              <table class="data-table" id="{{ item['date'] }}" style="display: none;" >
+                <form action="/table_full_data_entry_update?full_name={{ data2.full_name}}" method="post" >
                 {% for key, value in item.items() %}
                 {% if key == 'date' %}
                 <br><br><span onclick="toggleDisplay('{{ value }}')">
@@ -321,20 +337,29 @@
 
                 {% if key != '_id' %}
                 <tr>
-                  <td>{{ key }}</td>
-                  <td>{{ value }} </td>
+                 
+                  <td >{{ key }}  </td>
+                  <td ><textarea type="text" id="{{ value }}" name="{{ key }}" style="width: 100vh;" >{{ value }}</textarea>
+                  </td>
                 </tr>
                 {% endif %}
                 {% endfor %}
+                <tr><td><button type="submit" class="submit-button" >Update</button></td></tr>
+              </form>
               </table>
               {% endfor %}
+              
             </div>
-
+            {% endfor %}
+            
 
           </div>
+          
         </div>
+        
       </div>
-      <div class="col-sm-6">
+      
+      <div class="col-sm-12">
         <div class="card h-100">
           <div class="card-body">
             <h1 class="heading" style="display: inline-block; text-align: center;"
@@ -342,7 +367,7 @@
             <div id="Motivation Tracker Attributes" style="display: none;">
               <br><br><span onclick="toggleDisplay('Preference for Activities')">Preference for Activities:</span>
               <br><br>
-              <table class="data-table" id="Preference for Activities" style="display: none;padding-bottom: 10px;">
+              <table class="data-table" id="Preference for Activities" style="display: none;padding-bottom: 10px;" >
                 {% for item in data %}
                 <tr>
                   {% for key, value in item.items() %}
@@ -571,6 +596,29 @@
       }
     });
   }
+  function updateStatus(fullname) {
+    console.log("hello");
+    var selectedStatus = document.getElementById('statusSelect').value;
+
+    // You can use AJAX to send the selectedStatus to the Flask backend
+    // For simplicity, I'm using the fetch API here
+    fetch(`/update_status?full_name=${encodeURIComponent(fullname)}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: selectedStatus }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Status updated successfully:', data);
+        // You may want to update the UI or perform additional actions here
+    })
+    .catch(error => {
+        console.error('Error updating status:', error);
+    });
+}
+
   </script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -4,16 +4,24 @@
 <head>
     <meta charset="utf-8">
     <title>Name Dropdown</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <style>
         body {
             background-image: url("../images/bg.jpg");
             background-size: cover;
-            font-family: 'Inter', sans-serif;
-            font-family: 'Rubik', sans-serif;
+            font-family: 'Inter', 'Rubik', sans-serif;
         }
 
         .card {
@@ -44,74 +52,98 @@
             border-right: 1px solid #dee2e6;
         }
 
-        
-
         .selected-row {
             background-color: #007bff;
             color: #ffffff;
         }
+
         option:hover {
-      background-color: #e74c3c;
-      color: #fff;
-    }
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
 
         .table-row:hover {
-            background-color: #cbd8fc;
-            color: #ffffff;
+            background-color: #393038;
+            color: #020128;
         }
+        button {
+            margin-top: 0px;
+        background-color: #0e0731; /* Green color, you can change it */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right; /* Float the button to the right */
+    }
 
-        
+    button:hover {
+        background-color: #ffffff; /* Darker green color on hover */
+        color: #020128;
+    }
     </style>
 </head>
 
 <body>
+    
     <div class="card">
-        <label for="myDropdown">House name:</label>
-        <select id="myDropdown" name="myDropdown" onchange="filterTable(this)">
-            <option value="all">All</option>
-            {% for row in house %}
-            <option value="{{ row }}" >{{ row }}</option>
-            {% endfor %}
-        </select>
-
-        <br><br>
-
+       
         <label for="displayText" style="display: none;">Selected Value:</label>
         <span id="displayText" style="display: none;">None selected</span>
 
         <h1>Select the vongster:</h1>
         <form action="/get_data" method="post" id="nameForm">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>School</th>
-                        <th>City</th>
-                        <th>House</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in data %}
-                    <tr class="table-row" data-category="{{ row[3] }}">
-                        <td style="display: none;">{{ row[0] }}</td>
-                        <td>{{ row[4] }} {{ row[5] }}</td>
-                        <td>{{ row[1] }}</td>
-                        <td>{{ row[2] }}</td>
-                        <td>{{ row[3] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <input type="hidden" name="selectedName" id="selectedName">
-        </form>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <label for="myDropdown">House name:</label>
+        <select id="myDropdown" name="myDropdown" onchange="filterTable(this)">
+            <option value="all">All</option>
+            {% for row in house %}
+            <option value="{{ row }}">{{ row }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th style="display: none;">row</th>
+                <th>Name</th>
+                <th>School</th>
+                <th>City</th>
+                <th>House</th>
+                <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr class="table-row" data-category="{{ row[3] }}">
+
+                <td style="display: none;">{{ row[0] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input type="hidden" name="selectedName" id="selectedName">
+        </form><br>
+        <button onclick="redirectToLastAdded()">House Wise Data</button>
+    </div>
+    
     <script>
+        $(document)
+            .ready(function () {
+                $('#table_id')
+                    .DataTable();
+            });
         $(document).ready(function () {
+
             // Handle name click event
             $('.table-row').on('click', function () {
                 // Set the selected name to the hidden input
@@ -119,7 +151,11 @@
                 // Submit the form
                 $('#nameForm').submit();
             });
+
         });
+        function redirectToLastAdded() {
+                window.location.href = '/last_added_documents';
+            }
 
         function filterTable(select) {
             var selectedValue = select.value;
