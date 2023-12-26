@@ -600,25 +600,28 @@
     console.log("hello");
     var selectedStatus = document.getElementById('statusSelect').value;
 
-    // You can use AJAX to send the selectedStatus to the Flask backend
+    // You can use AJAX to send the selectedStatus and fullname to the Flask backend
     // For simplicity, I'm using the fetch API here
-    fetch(`/update_status?full_name=${encodeURIComponent(fullname)}`, {
+    fetch('/update_status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: selectedStatus }),
+        body: JSON.stringify({ 
+            fullname: fullname,
+            status: selectedStatus 
+        }),
     })
     .then(response => response.json())
     .then(data => {
         console.log('Status updated successfully:', data);
-        console.log(encodeURIComponent(fullname))
         // You may want to update the UI or perform additional actions here
     })
     .catch(error => {
         console.error('Error updating status:', error);
     });
 }
+
 
   </script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
