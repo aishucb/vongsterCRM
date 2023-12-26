@@ -452,10 +452,9 @@ def update_status():
     try:
         selected_status = request.json.get('status')
         full_name = request.args.get('full_name', 'Unknown')
-        if full_name is None:
-            return jsonify({'success': False, 'error': 'Missing required parameter: full_name'}), 400
+        print(full_name)
         collection = db['test3']
-        result = collection.update_one({'full_name': full_name}, {'$set': {'active': selected_status}})
+        result = collection.update_one({'full_name': 'aishwaryacb@12'}, {'$set': {'active': selected_status}})
 
         if result.modified_count > 0:
             return jsonify({'success': True, 'message': f'Status updated successfully for {full_name}'})
