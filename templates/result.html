@@ -205,12 +205,12 @@
                   width="150">
                 <div class="mt-3">
                   <h2>{{ data2.full_name }}</h2>
-                  {% if data2.active == 'Active' %}
+                  {% if data2.active == 'active' %}
                   <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
                     <option value="active" selected>Active</option>
                     <option value="dormant">Dormant</option>
                   {% endif %}
-                  {% if data2.active == 'Dormant' %}
+                  {% if data2.active == 'dormant' %}
                   <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
                     <option value="active" >Active</option>
                     <option value="dormant" selected>Dormant</option>
