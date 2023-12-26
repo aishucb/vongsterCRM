@@ -457,9 +457,9 @@ def update_status():
         result = collection.update_one({'full_name': full_name}, {'$set': {'active': selected_status}})
 
         if result.modified_count > 0:
-            return jsonify({'success': True, 'message': 'Status updated successfully'+full_name})
+            return jsonify({'success': True, 'message': f'Status updated successfully for {full_name}'})
         else:
-            return jsonify({'success': False, 'message': 'Failed to update status'+full_name})
+            return jsonify({'success': False, 'message': f'Failed to update status for {full_name}'})
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({'error': 'Internal Server Error'}), 500
