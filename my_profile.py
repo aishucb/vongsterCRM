@@ -452,6 +452,7 @@ def update_status():
     try:
         selected_status = request.json.get('status')
         full_name = request.args.get('full_name', 'Unknown')
+        print('hello')
         print(full_name)
         collection = db['test3']
         result = collection.update_one({'full_name': 'aishwaryacb@12'}, {'$set': {'active': selected_status}})
