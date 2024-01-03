@@ -5,16 +5,20 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&display=swap"
+    rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&display=swap"
-        rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&family=Zilla+Slab:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
   <title>Result</title>
   <style>
     body {
-     
-      margin: 20px;
       background-color: #ffffff;
+      font-family: 'Inter', sans-serif;
+font-family: 'Rubik', sans-serif;
+font-family: 'Zilla Slab', serif;
     }
 
     h1 {
@@ -24,12 +28,12 @@
     }
 
     .details {
-      border: 1px solid #a0e9ff;
+      border: 1px solid #001e27;
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 8px;
       background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
     }
 
     .details div {
@@ -45,20 +49,20 @@
 
     .custom-button {
       display: inline-block;
-      position: relative;
-      padding: 1px 4px;
-      background-color: #000000;
-      color: #ffffff;
+      padding: 10px 50px;
+      background-color: #ffffff;
+      color: #061839;
       text-decoration: none;
       border-radius: 5px;
-      text-align: center;
+      text-align: left;
       transition: background-color 0.3s ease;
-      float: right;
       margin-top: 27px;
+
     }
 
     .custom-button:hover {
-      background-color: #000000;
+      background-color: #061839;
+      color: white;
     }
 
     .data-table {
@@ -66,7 +70,7 @@
       border-collapse: collapse;
       margin-bottom: 30px;
       background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
       opacity: 0;
       animation: fadeIn 0.5s ease forwards;
     }
@@ -83,13 +87,14 @@
 
     .data-table th,
     .data-table td {
-      border: 0px solid #a0e9ff;
+      border: 0px solid #ffffff;
       padding: 9px;
       text-align: left;
+      width: 100%;
     }
 
     .data-table th {
-      background-color: #a0e9ff;
+      background-color: #061839;
       color: #ffffff;
     }
 
@@ -99,7 +104,7 @@
 
     .toggle-span {
       cursor: pointer;
-      color: #a0e9ff;
+      color: #101517;
       text-decoration: underline;
     }
 
@@ -107,7 +112,7 @@
       display: block;
       margin: 20px auto;
       background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
     }
 
     table {
@@ -122,10 +127,10 @@
     }
 
     body {
-      margin-top: 20px;
+      /* margin-top: 20px; */
       color: #1a202c;
       text-align: left;
-      background-image: url("../images/bg.jpg");
+
       background-size: cover;
       font-family: 'Inter', sans-serif;
       font-family: 'Rubik', sans-serif;
@@ -150,12 +155,13 @@
       background-clip: border-box;
       border: 0 solid rgba(0, 0, 0, .125);
       border-radius: .25rem;
+      height: 100vh;
     }
 
     .card-body {
       flex: 1 1 auto;
       min-height: 1px;
-      padding: 1rem;
+      /* padding: 1rem; */
     }
 
     .gutters-sm {
@@ -185,312 +191,223 @@
     .shadow-none {
       box-shadow: none !important;
     }
-    
+
+    button {
+      font-size: 16px;
+      border-radius: 5px;
+      padding: 14px 50px;
+      border: none;
+      font-weight: 500;
+      background-color: #9f121e;
+      color: white;
+      cursor: pointer;
+      margin-top: 25px;
+    }
+
+    .data-table {
+      display: none;
+    }
+
+    .card-content {
+      display: none;
+    }
+
+    .card-content.active {
+      display: block;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-  {% for data2 in cv %}
-  <div class="container">
-    <div class="main-body">
+  <div class="row" style="text-align:left ;height: 100%;">
 
-
-      <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
-                  width="150">
-                <div class="mt-3">
-                  <h2>{{ data2.full_name }}</h2>
-                  {% if data2.active == 'active' %}
-                  <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
-                    <option value="active" selected>Active</option>
-                    <option value="dormant">Dormant</option>
-                  {% endif %}
-                  {% if data2.active == 'dormant' %}
-                  <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data.full_name }}')">
-                    <option value="active" >Active</option>
-                    <option value="dormant" selected>Dormant</option>
-                  {% endif %}
-                </select>
-
-                
-
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mt-3">
-            <canvas id="lineChart" width="800" height="400" onclick="toggleSize()"></canvas>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Full Name</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.full_name }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Roll number</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.roll_number }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.email }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Mobile</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.phone }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">City</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.city }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">School name</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.institution }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">House Name</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.house }}
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Address</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ data2.address }}
-                </div>
-              </div>
-              <hr>
-
-            </div>
-          </div>
-        </div>
-
+    <div class="col-sm-3 col-md-3" id="sidebar"
+      style="color: #ffffff;background-color: #9f121e;word-wrap: break-word;padding-top: 20px;text-align: center;height: 120%;overflow-y: auto;padding-bottom: 100px;">
+      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"
+        style="background-color: #ffffff;">
+      <div class="mt-3">
+        {% for data2 in cv %}
+        <h2>{{ data2.full_name }}</h2>
+        {% if data2.active == 'active' %}
+        <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data2.full_name }}')" style="text-align: center;">
+          <option value="active" selected>Active</option>
+          <option value="dormant">Dormant</option>
+          {% endif %}
+          {% if data2.active == 'dormant' %}
+          <select class="form-control" id="statusSelect" onchange="updateStatus('{{ data2.full_name }}')" style="text-align: center;">
+            <option value="active">Active</option>
+            <option value="dormant" selected>Dormant</option>
+            {% endif %}
+          </select>
+          
+          <br><br>
+          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
+            onclick="showContent('card1')">
+            Profile</h6>
+          <hr style="border-color: #ffffff37;">
+          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
+            onclick="showContent('card2')">Motivation Tracker</h6>
+          <hr style="border-color: #ffffff37;">
+          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
+            onclick="showContent('card3')">
+            Consolidated data</h6>
+          <hr style="border-color: #ffffff37;">
+          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
+            onclick="showContent('card4')">
+            Performance analysis</h6>
+          <hr style="border-color: #ffffff37;">
+          <a href="/table_data?full_name={{ data2.full_name }}" class="custom-button">Add Tracker Data</a>
+          
       </div>
-
     </div>
-    <div class="row" >
-      <div class="col-sm-12 " >
-        <div class="card h-100" >
-          <div class="card-body" >
+    <div id="content" class="card col-sm-9 col-md-9">
+      <div id="card1Content" class="card-content active" style="padding: 20px;" >
+        <div class=" " style="background-color: #f9f5f5;">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Full Names</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.full_name }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Roll number</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.roll_number }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.email }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mobile</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.phone }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">City</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.city }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">School name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.institution }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">House Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.house }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ data2.address }}
+              </div>
+            </div>
+            <hr>
+          
+          </div>
 
-            <h1 class="heading" style="display: inline-block; text-align: center;"
-              onclick="toggleDisplay('Review Call Dates')">Review Call Dates</h1>
-            <a href="/table_data?full_name={{ data2.full_name }}" class="custom-button"
-              style="display: inline-block; margin-left: 20px;">+</a>
+        </div>
+      </div>
+      <div id="card2Content" class="card-content">
+        <div class="card h-100">
+          <div class="card-body" style="text-align: center;">
+            <!-- <h1 class="heading" style="display: inline-block; text-align: center;"
+              onclick="toggleDisplay('Review Call Dates')"><button> Call Dates</button></h1> -->
             {% for data in cv %}
-            <div id="Review Call Dates" style="display: none;">
-              {% endfor %}
-
+            {% endfor %}
+            <div id="Review Call Dates" style="text-align: ;">
               {% for item in data %}
               <br>
-              <table class="data-table" id="{{ item['date'] }}" style="display: none;" >
-                <form action="/table_full_data_entry_update?full_name={{ data2.full_name}}" method="post" >
-                {% for key, value in item.items() %}
-                {% if key == 'date' %}
-                <br><br><span onclick="toggleDisplay('{{ value }}')">
-                  {{ value }}<br>
-                </span> <br>
-                {% endif %}
-
-                {% if key != '_id' %}
-                <tr>
-                 
-                  <td >{{ key }}  </td>
-                  <td ><textarea type="text" id="{{ value }}" name="{{ key }}" style="width: 100vh;" >{{ value }}</textarea>
-                  </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                <tr><td><button type="submit" class="submit-button" >Update</button></td></tr>
-              </form>
+              <table class="data-table" id="{{ item['date'] }}" >
+                <form action="/table_full_data_entry_update?full_name={{ data2.full_name}}" method="post">
+                  {% for key, value in item.items() %}
+                  {% if key == 'date' %}
+                  <br><br><span style="display: grid;
+                  grid-template-columns: auto 1fr;
+                  gap: 10px;
+                  padding: 10px;
+                  background-color: #fff;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  cursor: pointer;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"
+           onmouseover="this.style.backgroundColor='#f9f9f9'"
+           onmouseout="this.style.backgroundColor='#fff'"
+           onclick="toggleDisplay('{{ value }}')">
+         <span style="font-weight: bold;">
+                    {{ value }}<br>
+                  </span> <br>
+                  {% endif %}
+                  {% if key != '_id' %}
+                  <tr>
+                    <td>{{ key }} </td>
+                    <td><textarea type="text" id="{{ value }}" name="{{ key }}"
+                        style="width: 100vh;">{{ value }}</textarea>
+                    </td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                  <tr>
+                    <td><button type="submit" class="submit-button">Update</button></td>
+                  </tr>
+                </form>
               </table>
               {% endfor %}
-              
             </div>
             {% endfor %}
-            
-
-          </div>
-          
-        </div>
-        
-      </div>
-      
-      <div class="col-sm-12">
-        <div class="card h-100">
-          <div class="card-body">
-            <h1 class="heading" style="display: inline-block; text-align: center;"
-              onclick="toggleDisplay('Motivation Tracker Attributes')">Motivation Tracker Attributes</h1>
-            <div id="Motivation Tracker Attributes" style="display: none;">
-              <br><br><span onclick="toggleDisplay('Preference for Activities')">Preference for Activities:</span>
-              <br><br>
-              <table class="data-table" id="Preference for Activities" style="display: none;padding-bottom: 10px;border: 1px #000000;" >
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Preference for Activities' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-              <br><span onclick="toggleDisplay('Preferred Time and days for Activities')">Preferred Time and days for
-                Activities:</span> <br>
-              <table class="data-table" id="Preferred Time and days for Activities"
-                style="display: none;padding-bottom: 10px;">
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Preferred Time and days for Activities' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-              <br><br><span onclick="toggleDisplay('Reasons for Not participating')">Reasons for Not
-                participating:</span> <br>
-              <table class="data-table" id="Reasons for Not participating" style="display: none;padding-bottom: 10px;">
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Reasons for Not participating' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-              <br><br><span onclick="toggleDisplay('Suggestions / Feedback about vong Activities')">Suggestions /
-                Feedback about vong
-                Activities:</span> <br>
-              <table class="data-table" id="Suggestions / Feedback about vong Activities"
-                style="display: none;padding-bottom: 10px;">
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Suggestions / Feedback about vong Activities' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-              <br><br><span onclick="toggleDisplay('Willing to participate in future (Yes / No)')">Willing to
-                participate in future (Yes
-                / No):</span> <br>
-              <table class="data-table" id="Willing to participate in future (Yes / No)"
-                style="display: none;padding-bottom: 10px;">
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Willing to participate in future (Yes / No)' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-              <br><br><span onclick="toggleDisplay('Upcoming /Ongoing Exam Schedule')">Upcoming /Ongoing Exam
-                Schedule:</span> <br>
-              <table class="data-table" id="Upcoming /Ongoing Exam Schedule"
-                style="display: none;padding-bottom: 10px;">
-                {% for item in data %}
-                <tr>
-                  {% for key, value in item.items() %}
-
-                  {% if key == 'date' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% if key == 'Upcoming /Ongoing Exam Schedule' %}
-                  <td>{{ value }} </td>
-                  {% endif %}
-                  {% endfor %}
-                </tr>
-                {% endfor %}
-              </table>
-            </div><br>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 " style="margin-top: 20px;">
+      <div id="card4Content" class="card-content" style="color: #000000;">
         <div class="card h-100">
           <div class="card-body" style="text-align: center;">
             <h1 onclick="toggleDisplay2('linechartcard')"  class="heading" style="display: inline-block; text-align: center;">
-              Performance Analysis</h1>
+              Genarate Report</h1>
 
             <div id="linechartcard" style="display: none;">
               <canvas id="lineChart2" width="800" height="400" onclick="toggleSize()"></canvas>
-              <table class="data-table" style="padding-bottom: 10px;">
+              <table>
+                <th>Score</th>
+                <th>Date</th>
                 {% for item in dataofpart %}
                 <tr>
                   {% for key, value in item.items() %}
                   {% if key == 'itemname' %}
-                  <td>{{ value }} </td>
+                  <td >{{ value }} </td>
                   {% endif %}
                   {% if key == 'mark' %}
                   <td>{{ value }} </td>
@@ -499,14 +416,145 @@
                 </tr>
                 {% endfor %}
               </table>
+              
             </div>
           </div>
         </div>
-      </div>  
+      </div>
+      <div id="card3Content" class="card-content">
+        <div class="col-sm-12" style="margin-top: 20px;">
+          <div class="card h-100">
+            <div class="card-body" style="text-align: center;">
+              <div id="Motivation Tracker Attributes">
+                <label for="headingDropdown">Select Heading:</label>
+                <select id="headingDropdown" onchange="showData()">
+                  <option value="TrackerAttributes">Tracker Attributes</option>
+                  <option value="PreferenceForActivities">Preference for Activities</option>
+                  <option value="PreferredTimeAndDays">Preferred Time and days for Activities</option>
+                  <option value="ReasonsForNotParticipating">Reasons for Not participating</option>
+                  <option value="FeedbackAboutActivities">Suggestions / Feedback about vong Activities</option>
+                  <option value="WillingToParticipate">Willing to participate in future (Yes / No)</option>
+                  <option value="ExamSchedule">Upcoming / Ongoing Exam Schedule</option>
+                </select>
+      
+                <div id="dataContainer">
+             
+                  <table class="data-table" id="PreferenceForActivities" >
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td> </td>
+                      {% endif %}
+                      {% if key == 'Preference for Activities' %}
+                      <td > </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    
+                  </table>
+
+                  <table class="data-table" id="PreferenceForActivities">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Preference for Activities' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  <table class="data-table" id="PreferredTimeAndDays">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Preferred Time and days for Activities' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  <table class="data-table" id="ReasonsForNotParticipating">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Reasons for Not participating' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  <table class="data-table" id="FeedbackAboutActivities">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Suggestions / Feedback about vong Activities' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  <table class="data-table" id="WillingToParticipate">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Willing to participate in future (Yes / No)' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  <table class="data-table" id="ExamSchedule">
+                    {% for item in data %}
+                    <tr>
+                      {% for key, value in item.items() %}
+
+                      {% if key == 'date' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% if key == 'Upcoming / Ongoing Exam Schedule' %}
+                      <td>{{ value }} </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+                {% endfor %}
+              </div><br>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
-  
-    
-  
+  </div>
   <script>
     function toggleDisplay(elementId) {
       var element = document.getElementById(elementId);
@@ -514,6 +562,8 @@
       if (element) {
         if (element.style.display === 'none') {
           element.style.display = 'inline'; // or 'block', depending on your needs
+          document.getElementById('sidebar').style.backgroundColor = '#9f121e';
+          document.getElementById('sidebar').style.height = '1000vh';
         } else {
           element.style.display = 'none';
         }
@@ -523,6 +573,7 @@
     }
 
     var data = {{ dataroll_json | safe }};
+    var datadate = {{ datadate_json | safe }};
 
     var ctx = document.getElementById('lineChart').getContext('2d');
 
@@ -542,85 +593,136 @@
         scales: {
           x: {
             title: {
-          display: true,
-          text: 'Time'
-        },
+              display: true,
+              text: 'Time'
+            },
             type: 'linear',
             position: 'bottom'
           },
           y: {
             title: {
-          display: true,
-          text: 'Score'
-        },
+              display: true,
+              text: 'Score'
+            },
             min: 0
           }
         }
       }
     });
-    function toggleDisplay2(elementId)
-    {
-      toggleDisplay(elementId);
-    var ctx = document.getElementById('lineChart2').getContext('2d');
+    function toggleDisplay2(elementId) {
+  toggleDisplay(elementId);
 
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: data.map((value, index) => index + 1),
-        datasets: [{
-          label: 'Line Graph',
-          data: data,
-          borderColor: 'black',
-          borderWidth: 2,
-          fill: false
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            title: {
-          display: true,
-          text: 'Time'
-        },
-            type: 'linear',
-            position: 'bottom'
+  // Assuming datadate and data are your original data arrays
+  var summedData = sumValuesWithSameY(datadate, data);
+
+  var ctx = document.getElementById('lineChart2').getContext('2d');
+
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: summedData.labels,
+      datasets: [{
+        label: 'Line Graph',
+        data: summedData.data,
+        borderColor: 'black',
+        borderWidth: 2,
+        fill: false
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Time'
           },
-          y: {
-            title: {
-          display: true,
-          text: 'Score'
+          type: 'linear',
+          position: 'bottom'
         },
-            min: 0
-          }
+        y: {
+          title: {
+            display: true,
+            text: 'Score'
+          },
+          min: 0
         }
       }
-    });
+    }
+  });
+}
+
+// Function to sum up values with the same Y-axis instance
+function sumValuesWithSameY(labels, data) {
+  var summedData = {};
+  for (var i = 0; i < labels.length; i++) {
+    var label = labels[i];
+    var value = data[i];
+
+    if (summedData[label] === undefined) {
+      summedData[label] = value;
+    } else {
+      summedData[label] += value;
+    }
   }
-  function updateStatus(fullname) {
-    console.log("hello");
-    var selectedStatus = document.getElementById('statusSelect').value;
 
-    // You can use AJAX to send the selectedStatus and fullname to the Flask backend
-    // For simplicity, I'm using the fetch API here
-    fetch('/update_status', {
+  // Convert summed data back to arrays
+  var summedLabels = Object.keys(summedData);
+  var summedValues = Object.values(summedData);
+
+  return { labels: summedLabels, data: summedValues };
+}
+    function updateStatus(fullname) {
+      console.log("hello");
+      var selectedStatus = document.getElementById('statusSelect').value;
+      console.log(fullname);
+
+      // Use AJAX to send the selectedStatus and fullname to the Flask backend
+      // For simplicity, I'm using the fetch API here
+      fetch('/update_status', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-            fullname: fullname,
-            status: selectedStatus 
+        body: JSON.stringify({
+          fullname: fullname,
+          status: selectedStatus
         }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Status updated successfully:', data);
-        // You may want to update the UI or perform additional actions here
-    })
-    .catch(error => {
-        console.error('Error updating status:', error);
-    });
-}
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Status updated successfully:', data);
+          // You may want to update the UI or perform additional actions here
+        })
+        .catch(error => {
+          console.error('Error updating status:', error);
+        });
+    }
+
+    function showData() {
+      var selectedHeading = document.getElementById("headingDropdown").value;
+      var dataContainers = document.querySelectorAll(".data-table");
+
+      // Hide all data tables
+      dataContainers.forEach(function (container) {
+        container.style.display = "none";
+      });
+
+      // Show the selected data table
+      var selectedDataContainer = document.getElementById(selectedHeading);
+      if (selectedDataContainer) {
+        selectedDataContainer.style.display = "block";
+      }
+    }
+
+    function showContent(cardId) {
+      var contentDivs = document.querySelectorAll('.card-content');
+      contentDivs.forEach(function (div) {
+        div.classList.remove('active');
+      });
+
+      var selectedContentDiv = document.getElementById(cardId + 'Content');
+      selectedContentDiv.classList.add('active');
+    }
 
 
   </script>

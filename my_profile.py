@@ -186,7 +186,7 @@ def index():
     firstnames = [document.get('firstname', 'Unknown') for document in documents5]
     lastnames = [document.get('lastname', 'Unknown') for document in documents6]
     schools = [document.get('institution', 'Unknown') for document in documents2]
-    city = [document.get('city', 'Unknown') for document in documents3]
+    city = [document.get('grade', 'Unknown') for document in documents3]
     house = [document.get('house', 'Unknown') for document in documents4]
     unique_list = [item for index, item in enumerate(house) if item not in house[:index]]
     min_length = min(len(names), len(schools), len(city),len(house))
@@ -273,12 +273,21 @@ def get_data():
         cursor = collection.find({})
         cursor2 = collection.find({})
         datac = []
+        datadate = []
+        marks_by_date = {}
         for document in cursor:
-            document_data = {}
             for key, value in document.items():
                 if(key=='mark'):
                     datac.append(value)
-        print(datac)
+                if(key=='date'):
+                    datadate.append(value)
+                    date=value
+            print( document['date']) 
+                   
+        print(marks_by_date)
+
+        for date, total_marks in marks_by_date.items():
+            print(f"Total marks for {date}: {total_marks}")
         dataapp = []
         for document in cursor2:
             document_data = {}
@@ -286,7 +295,7 @@ def get_data():
                 document_data[key] = value
             dataapp.append(document_data)
         print(dataapp)
-        return render_template('result.html', data=data, cv=cvdata, dataroll=datac, dataroll_json=json.dumps(datac),dataofpart=dataapp)
+        return render_template('result.html', data=data, cv=cvdata, dataroll=datac, dataroll_json=json.dumps(datac),dataofpart=dataapp,datadate=datadate, datadate_json=json.dumps(datadate))
 
 
 #update the vongster data
@@ -450,12 +459,14 @@ def get_last_added_documents():
 @app.route('/update_status', methods=['POST'])
 def update_status():
     try:
-        selected_status = request.json.get('status')
-        full_name = request.args.get('full_name', 'Unknown')
+        data = request.json  # Access the JSON data sent from the client
+        selected_status = data.get('status')
+        full_name = data.get('fullname', 'Unknown')
         print('hello')
         print(full_name)
+
         collection = db['test3']
-        result = collection.update_one({'full_name': 'aishwaryacb@12'}, {'$set': {'active': selected_status}})
+        result = collection.update_one({'full_name': full_name}, {'$set': {'active': selected_status}})
 
         if result.modified_count > 0:
             return jsonify({'success': True, 'message': f'Status updated successfully for {full_name}'})
@@ -463,8 +474,7 @@ def update_status():
             return jsonify({'success': False, 'message': f'Failed to update status for {full_name}'})
     except Exception as e:
         print(f"Error: {str(e)}")
-        return jsonify({'error': 'Internal Server Error'}), 500
-    
+        return jsonify({'error': 'Internal Server Error'}), 500  
 
 @app.route('/table_full_data_entry_update', methods=['GET', 'POST'])
 def add_data2():
@@ -512,6 +522,45 @@ def add_data2():
 
     # Handle other HTTP methods (e.g., GET) as needed
     return "Invalid request method"
+
+from flask import render_template
+
+from flask import render_template
+
+@app.route('/get_data_score', methods=['GET', 'POST'])
+def get_data_score():
+    dbname = "test3"
+    collection = db[dbname]
+    documents = collection.find()
+    data_set = []
+
+    for document in documents:
+        if 'roll_number' in document and 'full_name' in document and 'house' in document:
+            roll_number = document['roll_number']
+            full_name = document['full_name']
+            house = document['house']
+
+            rollnum_collection_name = str(roll_number)
+            rollnum_collection = db.get(rollnum_collection_name)  # Use get to handle potential None
+            if rollnum_collection:
+                rollnum_documents = rollnum_collection.find()
+
+                total_marks = sum(document.get('mark', 0) for document in rollnum_documents)
+
+                student_data = {
+                'Roll Number': roll_number,
+                'Full Name': full_name,
+                'House': house,
+                'Total Marks': total_marks
+                }
+
+            data_set.append(student_data)
+
+# Print the data set
+        for data in data_set:
+            print(f"Roll Number: {data['Roll Number']}, Full Name: {data['Full Name']}, House: {data['House']}, Total Marks: {data['Total Marks']}")
+        
+    return render_template('profile.html')
 
 
 if __name__ == '__main__':

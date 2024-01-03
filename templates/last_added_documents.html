@@ -12,10 +12,15 @@
         src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Rubik:wght@300&family=Zilla+Slab:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
     <title>Last Added Documents</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            font-family: 'Rubik', sans-serif;
+            font-family: 'Zilla Slab', serif;
             background-color: #FFFFFF; /* White background */
             color: #0F0F0F; /* Dark gray text */
             margin: 0;
@@ -27,8 +32,8 @@
            
         }
         h1 {
-    color: #0d071f; /* Text color (you can use any color code or name) */
-    font-family: Arial, sans-serif; /* Font family */
+    color: #9f121e; /* Text color (you can use any color code or name) */
+
     font-size: 28px; /* Font size */
     font-weight: bold; /* Font weight (bold) */
     margin-top: 20px; /* Bottom margin */
@@ -37,27 +42,27 @@
 
         h2 {
             
-            color: #232D3F; /* Dark blue text */
-            margin-top: 20px;
+            color: #9f121e; /* Dark blue text */
+
         }
 
         table {
     width: 100%; /* Set to 100% to take full width of the container */
     min-width: 800px; /* Set a minimum width to trigger horizontal scrolling */
     border-collapse: collapse;
-    margin-top: 20px;
+
     overflow-x: auto; /* Add this line to enable horizontal scrolling */
 }
 
 
         th, td {
             padding: 10px;
-            border: 1px solid #232D3F; /* Dark blue border */
+            border: 1px solid #9f121e; /* Dark blue border */
             text-align: left;
         }
 
         th {
-            background-color: #232D3F; /* Dark blue background for table header */
+            background-color: #9f121e93; /* Dark blue background for table header */
             color: #FFFFFF; /* White text */
         }
 
@@ -68,9 +73,22 @@
 </head>
 
 <body>
-    <h1>House Wise Data</h1>
+    <div class="row" style="text-align:left ;">
+
+        <div class="col-sm-2 col-md-2" style="color: #ffffff;background-color: #9f121e;word-wrap: break-word;height: 100vh;">
+            <img src="../images/vonghub logo.png" style="max-width: 100%;padding-bottom: 25px;">
+            <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;" onclick="redirectToLastAdded()">Home</h6>
+            <hr style="border-color: #ffffff37;">
+            <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;background-color: #dee2e63c;" >Motivation Tracker</h6>
+            <hr style="border-color: #ffffff37;">
+            <!-- <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;" onclick="redirectToScore()">Score Card</h6>
+            <hr style="border-color: #ffffff37;"> -->
+
+        </div>
+        <div class="card col-sm-10 col-md-10">
+            <h1>House Wise Data</h1>
     {% for house_name, house_data in data.items() %}
-    <h2 style="padding-top: 100px;">{{ house_name }}</h2>
+    <h2 style="padding-top: 10px;">{{ house_name }}</h2>
     <table id="{{ house_name }}">
         <thead>
             <tr>
@@ -96,8 +114,34 @@
         </tbody>
     </table>
     {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     <script>
+        function redirectToLastAdded() {
+            window.location.href = '/';
+        }
+        function redirectToScore() {
+            window.location.href = '/last_added_documents';
+        }
         $(document).ready(function () {
             {% for house_name, _ in data.items() %}
             $("#{{ house_name }}").DataTable();

@@ -4,8 +4,8 @@ from pymongo import MongoClient
 # MySQL Database credentials
 mysql_db_config = {
     'host': '127.0.0.1',
-    'user': 'vongearthhub_user',
-    'password': 'Andy@321',
+    'user': 'vongle',
+    'password': 'ashiv3377',
     'database': 'osqacademy',
 }
 
@@ -38,43 +38,44 @@ try:
         # Open the file in append mode
         with open(output_file, "a") as result_file:
             # Check each username in MongoDB
+            # ...
+
             for username_tuple in usernames:
-                user_id, username, department,firstname,lastname,email,phone1,address,city,institution = username_tuple
-                if department != 'vongle':
+                user_id, username, department, firstname, lastname, email, phone1, address, city, institution = username_tuple
+                if department != 'vongster':
                     continue
-                # Check if the username exists in MongoDB
+
+
                 mongo_query = {"full_name": username}
                 result = mongo_collection.find_one(mongo_query)
 
                 if result:
                     print(f"Document found in MongoDB for username {username}")
                     result_file.write(f"Document found for username {username}\n")
-
-
-
                 else:
                     print(f"No document found in MongoDB for username {username}")
                     result_file.write(f"No document found for username {username}\n")
-                    # Insert data into the MongoDB collection
-                    collection = mongo_db['test3']  # Use the Database object
-                    data_to_insert = {
-                        'roll_number': user_id,
-                        'full_name': username,
-                        'firstname': firstname,
-                        'lastname' : lastname,
-                        'email': email,
-                        'phone':phone1,
-                        'address':address,
-                        'city':city,
-                        'institution':institution
-                    }
-                    collection.insert_one(data_to_insert)
 
-                    # Create collections with dynamic names
-                    call = f"{username}_call"
-                    activity = f"{username}_act"
-                    mongo_db.create_collection(call)
+
+                collection = mongo_db['test3']  # Use the Database object
+                data_to_insert = {
+                    'roll_number': user_id,
+                    'full_name': username,
+                    'firstname': firstname,
+                    'lastname': lastname,
+                    'email': email,
+                'phone': phone1,
+                'address': address,
+                'city': city,
+                'institution': institution,
+                'active': 'active'
+                }
+                activity = f"user_{user_id}"
+        # Check if the collection already exists
+                if activity not in mongo_db.list_collection_names():
+                    collection.insert_one(data_to_insert)
                     mongo_db.create_collection(activity)
+
 except mysql.connector.Error as e:
     print(f"Error: {e}")
 
