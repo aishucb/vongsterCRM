@@ -407,7 +407,7 @@ font-family: 'Zilla Slab', serif;
               <canvas id="lineChart2" width="800" height="400" onclick="toggleSize()"></canvas>
               <table>
                 <th>Score</th>
-                <th>Date</th>
+                <th>Activity</th>
                 {% for item in dataofpart %}
                 <tr>
                   {% for key, value in item.items() %}
@@ -599,7 +599,7 @@ font-family: 'Zilla Slab', serif;
           x: {
             title: {
               display: true,
-              text: 'Time'
+              text: 'Month'
             },
             type: 'linear',
             position: 'bottom'
@@ -639,7 +639,7 @@ font-family: 'Zilla Slab', serif;
         x: {
           title: {
             display: true,
-            text: 'Time'
+            text: 'Month'
           },
           type: 'linear',
           position: 'bottom'
