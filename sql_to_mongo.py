@@ -29,7 +29,7 @@ try:
         cursor = mysql_connection.cursor()
 
         # Execute a SELECT query to get the list of usernames from MySQL
-        query = "SELECT id, username,department,firstname,lastname,email,phone1,address,city,institution FROM mdl_user"
+        query = "SELECT id, username,department,firstname,lastname,email,phone1,address,city,institution,idnumber,firstnamephonetic FROM mdl_user"
         cursor.execute(query)
 
         # Fetch all the rows
@@ -41,7 +41,7 @@ try:
             # ...
 
             for username_tuple in usernames:
-                user_id, username, department, firstname, lastname, email, phone1, address, city, institution = username_tuple
+                user_id, username, department, firstname, lastname, email, phone1, address, city, institution,grade,house = username_tuple
                 if department != 'vongster':
                     continue
 
@@ -68,7 +68,9 @@ try:
                 'address': address,
                 'city': city,
                 'institution': institution,
-                'active': 'active'
+                'active': 'active',
+                'grade': grade,
+                'house' : house
                 }
                 activity = f"user_{user_id}"
         # Check if the collection already exists

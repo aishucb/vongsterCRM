@@ -1,83 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Dashboard</title>
   <style>
     body {
-      display: flex;
-    }
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
 
-    #dashboard {
-      width: 20%;
-      background-color: #f0f0f0;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
+.container {
+ height: 100vh;
+ max-width: 600px;
+ margin: auto;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ padding: 1rem;
+}
 
-    .card {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
+.header {
+ margin: 0.25rem 0;
+ font-size: 2.5rem;
+}
 
-    .card:hover {
-      background-color: #e0e0e0;
-    }
+p {
+ margin: 0.5rem 0;
+ font-size: 22px;
+}
 
-    #content {
-      flex: 1;
-      padding: 20px;
-    }
 
-    .hidden {
-      display: none;
-    }
+/* animation class and keyframes */
+.overflow-hidden {
+ overflow: hidden;
+}
+
+.drop-in {
+ animation: drop-in 1s ease 200ms backwards;
+}
+
+.drop-in-2 {
+ animation: drop-in 1200ms ease 500ms backwards;
+}
+
+@keyframes drop-in {
+ from {
+  opacity: 0;
+  transform: translateY(-100px);
+ }
+ to {
+  opacity: 1;
+  transform: translate(0px);
+ }
+}
+
   </style>
-</head>
-<body>
-
-  <div id="dashboard">
-    <div class="card" onclick="showContent('card1')">Card 1</div>
-    <div class="card" onclick="showContent('card2')">Card 2</div>
-    <div class="card" onclick="showContent('card3')">Card 3</div>
-    <div class="card" onclick="showContent('card4')">Card 4</div>
+</head><body class="container" style="align-items: center;">
+  <div class="overflow-hidden">
+   <h1 class="header drop-in"><img src="../images/Vongster_CRM-removebg-preview.png" style="max-width: 300px;padding-bottom: 25px;"></h1>
   </div>
-
-  <div id="content">
-    <div id="card1Content" class="hidden">
-      <h2>Card 1 Content</h2>
-      <p>This is the content of Card 1.</p>
-    </div>
-    <div id="card2Content" class="hidden">
-      <h2>Card 2 Content</h2>
-      <p>This is the content of Card 2.</p>
-    </div>
-    <div id="card3Content" class="hidden">
-      <h2>Card 3 Content</h2>
-      <p>This is the content of Card 3.</p>
-    </div>
-    <div id="card4Content" class="hidden">
-      <h2>Card 4 Content</h2>
-      <p>This is the content of Card 4.</p>
-    </div>
+  <div class="overflow-hidden">
+   <p class="drop-in-2">
+    Loading....
+   </p>
   </div>
-
+  
   <script>
-    function showContent(cardId) {
-      // Hide all content divs
-      var contentDivs = document.querySelectorAll('.card-content');
-      contentDivs.forEach(function(div) {
-        div.classList.add('hidden');
-      });
-  
-      // Show the selected content div
-      var selectedContentDiv = document.getElementById(cardId + 'Content');
-      selectedContentDiv.classList.remove('hidden');
+    function redirect() {
+      window.location.href = '/index'
     }
+
+    // Event listener to trigger the redirection function after the page has loaded
+    window.addEventListener('load', function() {
+      setTimeout(redirect, 2000);
+    });
   </script>
-  
-</body>
-</html>
+ </body>
+ </html>

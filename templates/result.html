@@ -20,7 +20,9 @@
 font-family: 'Rubik', sans-serif;
 font-family: 'Zilla Slab', serif;
     }
-
+    h6,label,tr,td,th,span{
+      color: #000000;
+    }
     h1 {
       text-align: center;
       color: #000000;
@@ -128,7 +130,7 @@ font-family: 'Zilla Slab', serif;
 
     body {
       /* margin-top: 20px; */
-      color: #1a202c;
+      color: rgba(26, 32, 44, 0);
       text-align: left;
 
       background-size: cover;
@@ -215,6 +217,9 @@ font-family: 'Zilla Slab', serif;
     .card-content.active {
       display: block;
     }
+    /* CSS styles for the animation */
+
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -242,19 +247,19 @@ font-family: 'Zilla Slab', serif;
           </select>
           
           <br><br>
-          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
-            onclick="showContent('card1')">
+          <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;background-color: #dee2e63c;"
+            onclick="showContent('card1')" id="card1" class="sidehead">
             Profile</h6>
           <hr style="border-color: #ffffff37;">
           <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
-            onclick="showContent('card2')">Motivation Tracker</h6>
+            onclick="showContent('card2')" id="card2" class="sidehead">Motivation Tracker</h6>
           <hr style="border-color: #ffffff37;">
           <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
-            onclick="showContent('card3')">
+            onclick="showContent('card3')" id="card3" class="sidehead">
             Consolidated data</h6>
           <hr style="border-color: #ffffff37;">
           <h6 style="padding-top: 5px;padding-bottom:5px;padding-left:10px;color: #ffffff;text-align: left;"
-            onclick="showContent('card4')">
+            onclick="showContent('card4')" id="card4" class="sidehead">
             Performance analysis</h6>
           <hr style="border-color: #ffffff37;">
           <a href="/table_data?full_name={{ data2.full_name }}" class="custom-button">Add Tracker Data</a>
@@ -267,7 +272,7 @@ font-family: 'Zilla Slab', serif;
           <div class="card-body ">
             <div class="row">
               <div class="col-sm-3">
-                <h6 class="mb-0">Full Names</h6>
+                <h6 class="mb-0" >Full Names</h6>
               </div>
               <div class="col-sm-9 text-secondary">
                 {{ data2.full_name }}
@@ -395,7 +400,7 @@ font-family: 'Zilla Slab', serif;
       <div id="card4Content" class="card-content" style="color: #000000;">
         <div class="card h-100">
           <div class="card-body" style="text-align: center;">
-            <h1 onclick="toggleDisplay2('linechartcard')"  class="heading" style="display: inline-block; text-align: center;">
+            <h1 onclick="toggleDisplay2('linechartcard')"  class="heading" style="display: inline-block; text-align: center;background-color: #9f121e;padding: 20px;color: white;">
               Genarate Report</h1>
 
             <div id="linechartcard" style="display: none;">
@@ -439,7 +444,7 @@ font-family: 'Zilla Slab', serif;
       
                 <div id="dataContainer">
              
-                  <table class="data-table" id="PreferenceForActivities" >
+                  <table class="data-table" id="TrackerAttributes" >
                     {% for item in data %}
                     <tr>
                       {% for key, value in item.items() %}
@@ -538,7 +543,7 @@ font-family: 'Zilla Slab', serif;
                       {% if key == 'date' %}
                       <td>{{ value }} </td>
                       {% endif %}
-                      {% if key == 'Upcoming / Ongoing Exam Schedule' %}
+                      {% if key == 'Upcoming /Ongoing Exam Schedule' %}
                       <td>{{ value }} </td>
                       {% endif %}
                       {% endfor %}
@@ -715,6 +720,8 @@ function sumValuesWithSameY(labels, data) {
     }
 
     function showContent(cardId) {
+      
+      
       var contentDivs = document.querySelectorAll('.card-content');
       contentDivs.forEach(function (div) {
         div.classList.remove('active');
@@ -722,6 +729,14 @@ function sumValuesWithSameY(labels, data) {
 
       var selectedContentDiv = document.getElementById(cardId + 'Content');
       selectedContentDiv.classList.add('active');
+      var elementsWithClass = document.querySelectorAll('.sidehead');
+
+// Loop through each element and set the background color
+elementsWithClass.forEach(function (element) {
+  element.style.backgroundColor = '#1a202c00'; // Change this color code to your desired background color
+});
+document.getElementById(cardId).style.backgroundColor='#dee2e63c';
+
     }
 
 

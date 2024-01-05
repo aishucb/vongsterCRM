@@ -87,7 +87,7 @@ def add_call():
         db.create_collection(call)
         db.create_collection(activity)
         
-        return redirect('/')
+        return redirect('/index')
 
     return render_template('form2.html')
 
@@ -135,7 +135,7 @@ def add_data():
         }
         collection.insert_one(data_to_insert)
 
-        return redirect('/')
+        return redirect('/index')
 
 
 #Activity status table entry ,select dropdown
@@ -167,11 +167,11 @@ def table_full_data_entry_activity():
         }
         collection.insert_one(data_to_insert)
 
-        return redirect('/')
+        return redirect('/index')
 
 #This is for show data for indivitual
 
-@app.route('/')
+@app.route('/index')
 def index():
     collection = db['test3']
     documents1 = collection.find({})
@@ -206,6 +206,9 @@ def index():
 
     return render_template('dropdown.html', data=data,house=unique_list)
 
+@app.route('/')
+def start():
+    return render_template('profile.html')
 
 
 
@@ -411,7 +414,7 @@ def update_call():
     'feedback': feedback
         }
         collection.update_one({'full_name': full_name},  {'$set': data_to_insert})
-        return redirect('/')
+        return redirect('/index')
     # If it's a GET request, serve the form
 def json_serial(obj):
     if isinstance(obj, ObjectId):
@@ -512,10 +515,10 @@ def add_data2():
 
         if result.modified_count > 0:
             # Document updated
-            return redirect('/')
+            return redirect('/index')
         elif result.upserted_id:
             # New document inserted
-            return redirect('/')
+            return redirect('/index')
         else:
             # No changes made
             return "No changes made"
@@ -532,34 +535,26 @@ def get_data_score():
     dbname = "test3"
     collection = db[dbname]
     documents = collection.find()
-    data_set = []
 
-    for document in documents:
-        if 'roll_number' in document and 'full_name' in document and 'house' in document:
-            roll_number = document['roll_number']
-            full_name = document['full_name']
-            house = document['house']
+    rollnum_array = [document['roll_number'] for document in documents if 'roll_number' in document]
+    fullname_array = [document['full_name'] for document in documents if 'full_name' in document]
+    house_array = [document['house'] for document in documents if 'house' in document]
 
-            rollnum_collection_name = str(roll_number)
-            rollnum_collection = db.get(rollnum_collection_name)  # Use get to handle potential None
-            if rollnum_collection:
-                rollnum_documents = rollnum_collection.find()
+    data = []
 
-                total_marks = sum(document.get('mark', 0) for document in rollnum_documents)
+    for rollnum, fullname in zip(rollnum_array, fullname_array):
+        rollnum_collection_name = str(rollnum)  # Convert to string
+        rollnum_collection = db[rollnum_collection_name]
+        rollnum_documents = rollnum_collection.find()
+        print(rollnum)
+        total_marks = sum(document.get('mark', 0) for document in rollnum_documents)
 
-                student_data = {
-                'Roll Number': roll_number,
-                'Full Name': full_name,
-                'House': house,
-                'Total Marks': total_marks
-                }
-
-            data_set.append(student_data)
-
-# Print the data set
-        for data in data_set:
-            print(f"Roll Number: {data['Roll Number']}, Full Name: {data['Full Name']}, House: {data['House']}, Total Marks: {data['Total Marks']}")
-        
+        data.append({
+            'rollnum': rollnum,
+            'fullname': fullname,
+            'total_marks': total_marks
+        })
+    print(data)
     return render_template('profile.html')
 
 
